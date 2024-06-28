@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
+import TabNavigation from "./TabNavigation"
 
 
 const Stack = createStackNavigator()
@@ -7,10 +8,11 @@ const Stack = createStackNavigator()
 const AppNavigation = ()=>{
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={""}>
-                {/* <Stack.Screen name="Home" component={Home} /> */}
+            <Stack.Navigator initialRouteName={"TabNavigation"}>
+                <Stack.Screen name="TabNavigation" component={TabNavigation} options={{headerShown : false}}/>
             </Stack.Navigator>
-
         </NavigationContainer>
     )
 }
+
+export default AppNavigation
