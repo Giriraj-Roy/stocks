@@ -22,8 +22,8 @@ const TabNavigation = () => {
       tabBarInactiveTintColor: "#575757",
       tabBarLabelStyle: {
         fontSize: 24,
-        bottom: 10,
-        margin: 14
+        bottom: 14,
+        margin: 12
       },
       tabBarStyle: {
         height: Platform.OS === 'android' ? '10%' : '12%',
@@ -32,7 +32,12 @@ const TabNavigation = () => {
     })}
     
     >
-      <Tab.Screen name="Top Gainers" component={TopGainers} options={{headerShown : false}} />
+      <Tab.Screen name="Top Gainers" component={TopGainers} 
+                  options={{  
+                              // title : "Stocks App"
+                              headerShown : false
+                            }} 
+      />
       <Tab.Screen name="Top Losers" component={TopLosers} options={{headerShown : false}} />
     </Tab.Navigator>
   )
