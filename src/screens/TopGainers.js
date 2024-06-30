@@ -6,7 +6,7 @@ import TitleBar from '../components/TitleBar'
 const TopGainers = ({navigation}) => {
   return (
     <View>
-      <TitleBar screen="Stocks App"/>
+      <TitleBar navigation={navigation} screen="Stocks App"/>
       {/* <Text>TopGainers</Text> */}
 
         <FlatList

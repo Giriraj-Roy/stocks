@@ -11,7 +11,7 @@ const AppNavigation = ()=>{
         <NavigationContainer>
             <Stack.Navigator initialRouteName={"TabNavigation"}>
                 <Stack.Screen name="TabNavigation" component={TabNavigation} options={{headerShown : false}}/>
-                <Stack.Screen name="Details" component={Details} />
+                <Stack.Screen name="Details" component={Details}  options={{headerShown : false}}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

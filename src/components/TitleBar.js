@@ -1,10 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-const TitleBar = ({screen}) => {
+const TitleBar = ({navigation, screen}) => {
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 24, color: "black"}}>{screen}</Text>
+      <View style={{flexDirection: "row", alignItems: "center"}}>
+        <TouchableOpacity onPress={()=>navigation.goBack()}>
+          <Text style={{marginHorizontal: 10}}>🔙</Text>
+        </TouchableOpacity>
+        <Text style={{fontSize: 24, color: "black"}}>{screen}</Text>
+      </View>
+      {
+        screen != "Stocks App" &&
+        <View>
+          <TextInput
+            placeholder='Search'
+          />
+        </View>
+      }
     </View>
   )
 }
@@ -17,5 +30,8 @@ const styles = StyleSheet.create({
         height : 50,
         paddingHorizontal: 16,
         paddingVertical: 8,
+        flexDirection: "row",
+        alignItems : "center",
+        justifyContent: "space-between"
     }
 })
