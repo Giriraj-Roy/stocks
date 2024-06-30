@@ -1,21 +1,51 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import baseUrl from '../constants/baseUrl'
 
 const TitleBar = ({navigation, screen}) => {
+
+
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: "row", alignItems: "center"}}>
-        <TouchableOpacity onPress={()=>navigation.goBack()}>
-          <Text style={{marginHorizontal: 10}}>🔙</Text>
-        </TouchableOpacity>
+        {
+          screen != "Stocks App" &&
+          <TouchableOpacity onPress={()=>navigation.goBack()}>
+            <Text style={{marginHorizontal: 10}}>🔙</Text>
+          </TouchableOpacity>
+        }
         <Text style={{fontSize: 24, color: "black"}}>{screen}</Text>
       </View>
       {
         screen != "Stocks App" &&
         <View>
-          <TextInput
-            placeholder='Search'
-          />
+          
+          <TouchableOpacity
+            onPress={()=>navigation.navigate("Search")}
+            style={{width: 150, height: 40, paddingHorizontal: 10, backgroundColor: "", alignItems: "center", justifyContent: "center", borderRadius: 8, borderWidth: 1, borderColor: "gray"}}
+          >
+            <Text style={{color: "black"}}>Search</Text>
+          </TouchableOpacity>
+          {/* {
+            matches.length > 0 && 
+          <View style={{zIndex: 99999, backgroundColor: "green", width: 150, position: 'absolute', top: 40}}>
+              <FlatList
+                data={matches}
+                keyExtractor={(item) => item.id}
+                renderItem={({item})=>{
+                  return (
+                    <View style={{height: 30}}>
+                      <Text style={{color: "white"}}>{item["2. name"]}</Text>
+                    </View>
+                  )
+                }}
+              />
+          </View>
+          } */}
+
+
         </View>
       }
     </View>

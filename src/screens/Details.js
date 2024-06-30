@@ -1,9 +1,19 @@
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import TitleBar from '../components/TitleBar'
 import { LineChart } from 'react-native-chart-kit'
+import TimeSeries5min from '../assets/TimeSeries5min'
+
+// Text.defaultProps.style = { color: 'black' };
+
 
 const Details = ({navigation, route}) => {
+
+
+    const [stockDates, setStockDates] = useState([])
+    const [closingVals, setClosingVals] = useState([]);
+    const [chartData, setChartData] = useState({})
+
     const data = {
         "Symbol": "IBM",
         "AssetType": "Common Stock",
@@ -57,34 +67,87 @@ const Details = ({navigation, route}) => {
         "DividendDate": "2024-06-10",
         "ExDividendDate": "2024-05-09"
     }
-    const chartData = {
+    const tempChartData = {
         labels: ["January", "February", "March", "April", "May", "June"],
+        // labels: tempKey,
         datasets: [
           {
-            data: [20, 45, 28, 80, 99, 43],
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-            strokeWidth: 2 // optional
+            data: [1,3,2,6,3,5],
+            // data: closingVals,
+            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, 
+            strokeWidth: 2 
           }
         ],
-        legend: ["Rainy Days"] // optional
+        // legend: ["Rainy Days"] 
       };
-    const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
-    };
+    
     const uri = `https://picsum.photos/200`
     const screenWidth = Dimensions.get('window').width
+
+    
+    const timeSeries = TimeSeries5min[`Time Series (5min)`]
+    const tempKey = Object.keys(timeSeries)
+    const checkValues = ()=>{
+        try{
+            let tempVals = []
+            console.log("tempKey.length",tempKey[0].split(" ")[1]);
+            let stockKeys = []
+            tempKey.forEach((ele)=>{
+                stockKeys.push(ele.split(" ")[1]);
+            })
+            // setStockDates(tempKey)
+            setStockDates(stockKeys)
+
+            tempKey.forEach(key => {
+
+                // console.log(`Timestamp: ${key}`);
+                // console.log(`1. open: ${timeSeries[key]["1. open"]}`);
+                // console.log(`2. high: ${timeSeries[key]["2. high"]}`);
+                // console.log(`3. low: ${timeSeries[key]["3. low"]}`);
+                // console.log(`5. volume: ${timeSeries[key]["5. volume"]}`);
+                // console.log('');
+
+                // console.log(`4. close: ${timeSeries[key]["4. close"]}`);
+                const closeVal = timeSeries[key]["4. close"]
+                tempVals.push(closeVal)
+            });
+            setClosingVals(tempVals)
+        }catch(e){
+            console.error("Error checkValues", e);
+        }
+    }
     
     const [stock, setStock] = useState({})
+
+
     useEffect(()=>{
         setStock(data)
+        // setChartData(tempChartData)
+        checkValues()
     },[])
+    useEffect(()=>{
+        console.log("stockDates ", stockDates);
+        console.log("closingVals ", closingVals);
+        // if(stockDates.length > 0 && closingVals.length>0){
+            const tempChartData = {
+                labels: stockDates,
+                // labels: tempKey,
+                datasets: [
+                  {
+                    data: closingVals,
+                    // data: closingVals,
+                    color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, 
+                    strokeWidth: 2 
+                  }
+                ],
+                // legend: ["Rainy Days"] 
+              };
+              setChartData(tempChartData)
+        // }
+
+
+    },[stockDates, closingVals])
+
     const stockParams = [
         { id: 1, name: "Market Cap", value: `$${(stock?.MarketCapitalization/1e10).toFixed(2)}T`},
         { id: 2, name: "P/E Ratio", value: stock?.PERatio},
@@ -92,65 +155,87 @@ const Details = ({navigation, route}) => {
         { id: 4, name: "Dividend Yield", value: stock?.DividendYield+"%"},
         { id: 5, name: "Profit Margin", value: stock?.ProfitMargin},
     ]
-    return (
-        <View>
-            <TitleBar navigation={navigation} screen="Details Screen"/>
 
-            <View style={{flexDirection: "row", justifyContent: "space-between", paddingRight: 10}}>
-                <View style={{flexDirection: "row"}}>
-                    <Image source={{uri : uri}} style={styles.image}/>
-                    <View>
-                        <Text>{stock?.Name}</Text>
-                        <View style={{flexDirection: "row"}}>
-                            <Text>{stock?.Symbol}, </Text>
-                            <Text>{stock?.AssetType}</Text>
+    
+    const chartConfig = {
+        backgroundGradientFrom: "#FFFFFF",
+        // backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#FFFFFF",
+        // backgroundGradientToOpacity: 0.5,
+        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        strokeWidth: 2,
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false 
+    };
+    
+    // try{
+        
+        return (
+            <ScrollView>
+                <TitleBar navigation={navigation} screen="Details Screen"/>
+    
+                <View style={{flexDirection: "row", justifyContent: "space-between", paddingRight: 10}}>
+                    <View style={{flexDirection: "row"}}>
+                        <Image source={{uri : uri}} style={styles.image}/>
+                        <View>
+                            <Text style={{color: "black"}}>{stock?.Name}</Text>
+                            <View style={{flexDirection: "row"}}>
+                                <Text style={{color: "black"}}>{stock?.Symbol}, </Text>
+                                <Text style={{color: "black"}}>{stock?.AssetType}</Text>
+                            </View>
+                            <Text style={{color: "black"}}>{stock?.Exchange}</Text>
                         </View>
-                        <Text>{stock?.Exchange}</Text>
+                    </View>
+                    <View>
+                        <Text style={{color: "black"}}>  Curr val</Text>
+                        <Text style={{color: "black"}}>  Prof</Text>
+                    </View>
+    
+                </View>
+    
+                {/* Chart */}
+                <LineChart
+                    data={ tempChartData}
+                    // data={ chartData}
+                    width={screenWidth}
+                    height={220}
+                    withDots={false}
+                    xLabelsOffset={10}
+                    chartConfig={chartConfig}
+                />
+    
+                <View style={{marginVertical: 10, width: "98%", alignSelf: "center", borderWidth: 2, borderColor: "lightgray", padding: 10}}>
+                    <Text style={{color: "black", paddingBottom: 10, borderBottomWidth: 1}}>  About {stock?.Name}</Text>
+                    <Text style={{marginVertical: 6, color: "black", textAlign: "justify"}}>{stock?.Description}</Text>
+                    <View style={{flexDirection: "row", flexWrap : 'wrap'}}>
+                        <View style={{marginVertical: 4, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 30, backgroundColor: ""}}>
+                            <Text>Industry : {stock?.Industry}</Text>
+                        </View>
+                        <View style={{marginVertical: 4, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 30, backgroundColor: ""}}>
+                            <Text>Sector : {stock?.Sector}</Text>
+                        </View>
+                    </View>
+                    <View  style={{flexDirection: "row", justifyContent: "space-around"}}>
+                        {
+                            stockParams?.map((ele)=>{
+                                return (
+                                    <View key={ele?.id}>
+                                        <Text style={{color: "black"}}>{ele?.name}</Text>
+                                        <Text style={{fontWeight: "600", color: "black"}}>{ele?.value}</Text>
+                                    </View>
+    
+                                )
+                            })
+                        }
                     </View>
                 </View>
-                <View>
-                    <Text>  Curr val</Text>
-                    <Text>  Prof</Text>
-                </View>
-
-            </View>
-
-            {/* Chart */}
-            <LineChart
-                data={chartData}
-                width={screenWidth}
-                height={220}
-                chartConfig={chartConfig}
-            />
-
-            <View>
-            <Text>  About {stock?.Name}</Text>
-            <Text>{stock?.Description}</Text>
-            <View style={{flexDirection: "row"}}>
-                <View>
-                    <Text>Industry : </Text>
-                </View>
-                <View>
-                    <Text>Sector : </Text>
-                </View>
-            </View>
-            <View  style={{flexDirection: "row", justifyContent: "space-around"}}>
-                {
-                    stockParams?.map((ele)=>{
-                        return (
-                            <View key={ele?.id}>
-                                <Text>{ele?.name}</Text>
-                                <Text style={{fontWeight: "600"}}>{ele?.value}</Text>
-                            </View>
-
-                        )
-                    })
-                }
-            </View>
-
-            </View>
-        </View>
-    )
+            </ScrollView>
+        )
+    // }catch(e){
+    //     return(
+    //         navigation.navigate("Error")
+    //     )
+    // }
 }
 
 export default Details
