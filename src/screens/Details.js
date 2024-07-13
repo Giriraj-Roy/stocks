@@ -1,30 +1,37 @@
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import TitleBar from '../components/TitleBar'
-import { LineChart } from 'react-native-chart-kit'
 import TimeSeries5min from '../assets/TimeSeries5min'
 import Loader from '../components/Loader'
 import StockDesc from '../components/StockDesc'
 import { AppContext } from '../utils/AppContext'
 import Chart from '../components/Chart'
 import moment from 'moment'
+import StocksHeader from '../components/StocksHeader'
 
-// Text.defaultProps.style = { color: 'black' };
 
 
 const Details = ({navigation, route}) => {
 
-
-    const [stockDates, setStockDates] = useState([])
-    const [closingVals, setClosingVals] = useState([]);
+    //State variables
     const [sampleData, setSampleData] = useState([])
-    const [labels, setLabels] = useState([]);
-    const [stockClose, setStockClose] = useState([])
-    const [chartData, setChartData] = useState({})
-    // const [loading, setLoading] = useState(false)
+    const [stock, setStock] = useState({})
 
+    //Data configured from route
+    const item = route?.params?.item
+    const tab = route?.params?.tab
+    const percent = Number(item?.change_percentage.substring(0, item?.change_percentage.length - 1))
+
+    // Fetch Data from Context
     const {loading, setLoading} = useContext(AppContext)
 
+    const stockParams = [
+        { id: 1, name: "Market Cap", value: `$${(stock?.MarketCapitalization/1e10).toFixed(2)}T`},
+        { id: 2, name: "P/E Ratio", value: stock?.PERatio},
+        { id: 3, name: "Beta", value: stock?.Beta},
+        { id: 4, name: "Dividend Yield", value: stock?.DividendYield+"%"},
+        { id: 5, name: "Profit Margin", value: stock?.ProfitMargin},
+    ]
     const data = {
         "Symbol": "IBM",
         "AssetType": "Common Stock",
@@ -78,54 +85,9 @@ const Details = ({navigation, route}) => {
         "DividendDate": "2024-06-10",
         "ExDividendDate": "2024-05-09"
     }
-    const tempChartData = {
-        labels: ["January", "February", "March", "April", "May", "June"],
-        // labels: tempKey,
-        datasets: [
-          {
-            data: [1,3,2,6,3,5],
-            // data: closingVals,
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, 
-            strokeWidth: 2 
-          }
-        ],
-        // legend: ["Rainy Days"] 
-      };
     
     const uri = `https://picsum.photos/200`
     const screenWidth = Dimensions.get('window').width
-
-    
-    // const tempKey = Object.keys(timeSeries)
-    // const checkValues = ()=>{
-        //     try{
-            //         let tempVals = []
-            //         console.log("tempKey.length",tempKey[0].split(" ")[1]);
-    //         let stockKeys = []
-    //         tempKey.forEach((ele)=>{
-    //             stockKeys.push(ele.split(" ")[1]);
-    //         })
-    //         // setStockDates(tempKey)
-    //         setStockDates(stockKeys)
-
-    //         tempKey.forEach(key => {
-
-    //             // console.log(`Timestamp: ${key}`);
-    //             // console.log(`1. open: ${timeSeries[key]["1. open"]}`);
-    //             // console.log(`2. high: ${timeSeries[key]["2. high"]}`);
-    //             // console.log(`3. low: ${timeSeries[key]["3. low"]}`);
-    //             // console.log(`5. volume: ${timeSeries[key]["5. volume"]}`);
-    //             // console.log('');
-
-    //             // console.log(`4. close: ${timeSeries[key]["4. close"]}`);
-    //             const closeVal = timeSeries[key]["4. close"]
-    //             tempVals.push(closeVal)
-    //         });
-    //         setClosingVals(tempVals)
-    //     }catch(e){
-    //         console.error("Error checkValues", e);
-    //     }
-    // }
 
     const getSampleData = async ()=>{
         try{
@@ -139,18 +101,17 @@ const Details = ({navigation, route}) => {
                     "4. close": Number(timeSeries[timestamp]["4. close"])
                 };
             }
-            const finalData = Object.entries(outputData).map(([x, { "4. close": y }]) => ({ x : Number(x), y }))
-            console.log("finalData",finalData);
-            // setSampleData(outputData)
+            
+
             fetchSampleData().then((data)=>{
                 setSampleData(data)
             })
-            fetchLabelData().then((data) => {
-                setLabels(data);
-              });
-              fetchStockData().then((data)=>{
-                setStockClose(data)
-              })
+            // fetchLabelData().then((data) => {
+            //     setLabels(data);
+            //   });
+            //   fetchStockData().then((data)=>{
+            //     setStockClose(data)
+            //   })
 
               function fetchSampleData() {
                 return new Promise((resolve) => {
@@ -159,81 +120,42 @@ const Details = ({navigation, route}) => {
                   }, 1000);
                 });
               }
-            function fetchLabelData() {
-                return new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve(Object.keys(outputData).reverse());
-                  }, 2000);
-                });
-              }
-              function fetchStockData() {
-                return new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve(labels?.map(label => parseFloat(outputData[label]["4. close"])));
-                  }, 2000);
-                });
-              }
-            // setStockClose(labels?.map(label => parseFloat(outputData[label]["4. close"])))
-
-            // console.log("Labels : ", labels);
+            // function fetchLabelData() {
+            //     return new Promise((resolve) => {
+            //       setTimeout(() => {
+            //         resolve(Object.keys(outputData).reverse());
+            //       }, 2000);
+            //     });
+            //   }
+            //   function fetchStockData() {
+            //     return new Promise((resolve) => {
+            //       setTimeout(() => {
+            //         resolve(labels?.map(label => parseFloat(outputData[label]["4. close"])));
+            //       }, 2000);
+            //     });
+            //   }
         }
         catch(e){
             console.error("Error getSampleData", e);
         }
     }
     
-    const [stock, setStock] = useState({})
 
 
     useEffect(()=>{
         setLoading(true)
         setStock(data)
-        // setChartData(tempChartData)
-        // checkValues()
         getSampleData()
 
         setTimeout(()=>setLoading(false),2000)
     },[])
 
-    useEffect(()=>{
-        // console.log("stockDates ", stockDates);
-        // console.log("closingVals ", closingVals);
-        // if(stockDates.length > 0 && closingVals.length>0){
-            const tempChartData = {
-                labels: stockDates,
-                // labels: tempKey,
-                datasets: [
-                  {
-                    data: closingVals,
-                    // data: closingVals,
-                    color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, 
-                    strokeWidth: 2 
-                  }
-                ],
-                // legend: ["Rainy Days"] 
-              };
-              setChartData(tempChartData)
-                // console.log("chartData",chartData);
-
-        // }
-
-
-    },[stockDates, closingVals])
-
-    const stockParams = [
-        { id: 1, name: "Market Cap", value: `$${(stock?.MarketCapitalization/1e10).toFixed(2)}T`},
-        { id: 2, name: "P/E Ratio", value: stock?.PERatio},
-        { id: 3, name: "Beta", value: stock?.Beta},
-        { id: 4, name: "Dividend Yield", value: stock?.DividendYield+"%"},
-        { id: 5, name: "Profit Margin", value: stock?.ProfitMargin},
-    ]
+    
 
     
     const chartConfig = {
         backgroundGradientFrom: "#FFFFFF",
-        // backgroundGradientFromOpacity: 0,
         backgroundGradientTo: "#FFFFFF",
-        // backgroundGradientToOpacity: 0.5,
         color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
         strokeWidth: 2,
         barPercentage: 0.5,
@@ -246,108 +168,28 @@ const Details = ({navigation, route}) => {
     
         return (
             loading ? <Loader/> :
+
             <ScrollView style={{backgroundColor: "#FFFFFF"}}>
                 <TitleBar navigation={navigation} screen="Details"/>
     
-                <View style={{flexDirection: "row", justifyContent: "space-between", paddingRight: 10}}>
-                    <View style={{flexDirection: "row"}}>
-                        <Image source={{uri : uri}} style={styles.image}/>
-                        <View>
-                            <Text style={{color: "black"}}>{stock?.Name}</Text>
-                            <View style={{flexDirection: "row"}}>
-                                <Text style={{color: "black"}}>{stock?.Symbol}, </Text>
-                                <Text style={{color: "black"}}>{stock?.AssetType}</Text>
-                            </View>
-                            <Text style={{color: "black"}}>{stock?.Exchange}</Text>
-                        </View>
-                    </View>
-                    <View>
-                        <Text style={{color: "black"}}> {route?.params?.item?.price}</Text>
-                        <Text style={{color: "black"}}>  {route?.params?.item?.change_percentage}</Text>
-                    </View>
-    
-                </View>
+                <StocksHeader stock={stock} item={item} tab={tab} percent={percent} />
                 
-                {/* 
-                    <View style={{marginVertical: 10, justifyContent: "center", alignItems: "center"}}>
-                        <LineChart
-                            // data={ tempChartData}
-                            data={ chartData}
-                            width={screenWidth}
-                            height={220}
-                            withDots={false}
-                            xLabelsOffset={10}
-                            chartConfig={chartConfig}
-                        />
 
-                    </View> 
-                */}
                 <View style={styles.container}>
                     {
-                        labels.length > 0 &&
-                        <Chart sampleData={sampleData} labels={labels} stockClose={stockClose} />
-                        // <LineChart
-                        //     data={{
-                        //         labels:  ["A","V", "W"],
-                        //         datasets: [
-                        //             {
-                        //                 data: ["150", "240", "210"],
-                        //             },
-
-                        //         ],
-                        //     }}
-                        //     width={Dimensions.get('window').width} // from react-native
-                        //     height={220}
-                        //     yAxisLabel="$"
-                        //     yAxisSuffix="k"
-                        //     yAxisInterval={1} // optional, defaults to 1
-                        //     chartConfig={{
-                        //         backgroundColor: '#e26a00',
-                        //         backgroundGradientFrom: '#fb8c00',
-                        //         backgroundGradientTo: '#ffa726',
-                        //         decimalPlaces: 2, // optional, defaults to 2dp
-                        //         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        //         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        //         style: {
-                        //         borderRadius: 16,
-                        //         },
-                        //         propsForDots: {
-                        //         r: '6',
-                        //         strokeWidth: '2',
-                        //         stroke: '#ffa726',
-                        //         },
-                        //     }}
-                        //     bezier
-                        //     style={{
-                        //         marginVertical: 8,
-                        //         borderRadius: 16,
-                        //     }}
-                        // />
+                        sampleData.length > 0 &&
+                        <Chart sampleData={sampleData} />
                     }
                 </View>
     
                 <StockDesc stock={stock} stockParams={stockParams} />
             </ScrollView>
         )
-       
-    // }catch(e){
-    //     return(
-    //         navigation.navigate("Error")
-    //     )
-    // }
 }
 
 export default Details
 
 const styles = StyleSheet.create({
-    image: {
-        width: 60,
-        height: 60,
-        borderColor: 'lightgray',
-        borderWidth: 2,
-        borderRadius: 30,
-        marginHorizontal: 6
-      },
       container: {
         flex: 1,
         justifyContent: 'center',
