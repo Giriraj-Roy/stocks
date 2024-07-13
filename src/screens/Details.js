@@ -8,6 +8,7 @@ import { AppContext } from '../utils/AppContext'
 import Chart from '../components/Chart'
 import moment from 'moment'
 import StocksHeader from '../components/StocksHeader'
+import getReq from '../utils/Apis'
 
 
 
@@ -96,7 +97,7 @@ const Details = ({navigation, route}) => {
             
             for (const timestamp in timeSeries) {
                 const k = Number(moment(timestamp).format('X'))
-                console.log(typeof(k), k);
+                // console.log(typeof(k), k);
                 outputData[k] = {
                     "4. close": Number(timeSeries[timestamp]["4. close"])
                 };
@@ -116,7 +117,8 @@ const Details = ({navigation, route}) => {
               function fetchSampleData() {
                 return new Promise((resolve) => {
                   setTimeout(() => {
-                    resolve(Object.entries(outputData).map(([x, { "4. close": y }]) => ({ x : Number(x), y })));
+                    // resolve(Object.entries(outputData).map(([x, { "4. close": y }]) => ({ x : Number(x), y })));
+                    resolve(Object.entries(outputData).map(([x, { "4. close": y }]) => ({ y })));
                   }, 1000);
                 });
               }
@@ -146,6 +148,7 @@ const Details = ({navigation, route}) => {
         setLoading(true)
         setStock(data)
         getSampleData()
+        getReq("detail", "function=OVERVIEW&symbol=IBM")
 
         setTimeout(()=>setLoading(false),2000)
     },[])

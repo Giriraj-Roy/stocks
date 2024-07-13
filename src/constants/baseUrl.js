@@ -1,1 +1,3 @@
-export default baseUrl = "https://www.alphavantage.co/"
+const baseUrl = "https://www.alphavantage.co/"
+
+export default baseUrl;

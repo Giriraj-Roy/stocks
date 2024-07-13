@@ -1,9 +1,7 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import React, {useContext, useEffect} from 'react';
-// import { LineChart } from 'react-native-chart-kit'
+import {Dimensions, processColor, StyleSheet} from 'react-native';
+import React from 'react';
 import {LineChart} from 'react-native-charts-wrapper';
-import {AppContext} from '../utils/AppContext';
-import Loader from './Loader';
+
 
 const Chart = ({sampleData}) => {
   return (
@@ -11,20 +9,29 @@ const Chart = ({sampleData}) => {
     <LineChart
       data={{
         dataSets: [{values: sampleData}],
+        config: {
+          drawFilled: true, // Enable the background fill
+          fillColor: processColor('red'), // Background color under the curve
+          // fillAlpha: 100, // Transparency level (0-255)
+          // color: processColor('#ff7043'), // Line color
+          // drawValues: false,
+        }
       }}
       width={Dimensions.get('window').width}
       height={220}
       yAxisLabel="$"
-      chartConfig={{
-        backgroundColor: '#e26a00',
-        backgroundGradientFrom: '#fb8c00',
-        backgroundGradientTo: '#ffa726',
-        decimalPlaces: 2,
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
-          borderRadius: 16,
-        },
-      }}
+      // chartConfig={{
+      //   backgroundColor: '#e26a00',
+      //   backgroundGradientFrom: '#fb8c00',
+      //   backgroundGradientTo: '#ffa726',
+      //   fillColor: processColor('rgba(255, 255, 0, 1)'),
+      //   fillAlpha: 100,
+      //   drawFilled: true,
+      //   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      //   style: {
+      //     borderRadius: 16,
+      //   },
+      // }}
       bezier
       style={{
         marginVertical: 8,
@@ -33,6 +40,7 @@ const Chart = ({sampleData}) => {
       chartDescription={{text: ''}}
       xAxis={{
         position: 'BOTTOM',
+        drawLabels: false
       }}
       yAxis={{
         left: {enabled: true},
@@ -51,15 +59,15 @@ const Chart = ({sampleData}) => {
       //   borderColor={processColor('teal')}
       borderWidth={1}
       //   drawBorders={true}
-      touchEnabled={true}
-      dragEnabled={true}
-      scaleEnabled={false}
+      // touchEnabled={true}
+      // dragEnabled={true}
+      // scaleEnabled={false}
       //   scaleXEnabled={true}
       //   scaleYEnabled={true}
-      pinchZoom={true}
-      doubleTapToZoomEnabled={true}
-      dragDecelerationEnabled={true}
-      dragDecelerationFrictionCoef={0.99}
+      // pinchZoom={true}
+      // doubleTapToZoomEnabled={true}
+      // dragDecelerationEnabled={true}
+      // dragDecelerationFrictionCoef={0.99}
     />
   );
 };
