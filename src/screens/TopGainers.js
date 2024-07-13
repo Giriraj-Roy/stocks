@@ -38,6 +38,9 @@ const TopGainers = ({navigation}) => {
             numColumns={2}
             renderItem={({item})=> <TopCards navigation={navigation} item={item}/>}
             keyExtractor={item => item}
+            initialNumToRender={5}
+            maxToRenderPerBatch={5}
+            // windowSize={21}
             contentContainerStyle={{alignSelf: "center", justifyContent: "space-evenly", paddingBottom: 50}}
         />
 
