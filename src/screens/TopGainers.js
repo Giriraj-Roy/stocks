@@ -19,7 +19,7 @@ const TopGainers = ({navigation}) => {
 
   return (
     loading ? <Loader/> :
-    <View>
+    <View style={{flex: 1, backgroundColor: "white"}}>
       <TitleBar navigation={navigation} screen="Stocks App"/>
       {/* <Text>TopGainers</Text> */}
 

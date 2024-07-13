@@ -12,9 +12,9 @@ const TabNavigation = () => {
       tabBarIcon: ({ focused }) => {
         if (route?.name === 'Home') {
           if(focused){
-           return <HomeActiveSVG/>
+           return null
           }else{
-            return <HomeSVG/>
+            return null
           }
         }
       },
