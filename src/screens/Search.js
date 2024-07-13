@@ -33,13 +33,18 @@ const Search = ({navigation}) => {
     };
   return (
     <View>
-      <TextInput
-            style={{width: "100%", height: 40, paddingHorizontal: 10, backgroundColor: "", alignItems: "center", borderRadius: 8, borderWidth: 1, borderColor: "gray"}}
-            placeholder='Search'
-            placeholderTextColor={"black"}
-            value={query}
-            onChangeText={text => handleSearch(text)}
-        />
+        <View style={{flexDirection: "row", alignItems: "center", borderRadius: 8, borderWidth: 1, borderColor: "gray"}}>
+            <TouchableOpacity onPress={()=> navigation.goBack()}>
+                <Text style={{paddingHorizontal: 10}}>{`<--`}</Text>
+            </TouchableOpacity>
+            <TextInput
+                style={{width: "80%", height: 40, paddingHorizontal: 10, backgroundColor: "", alignItems: "center", }}
+                placeholder='Search'
+                placeholderTextColor={"black"}
+                value={query}
+                onChangeText={text => handleSearch(text)}
+            />
+        </View>
         <View style={{ backgroundColor: "white", width: "100%",paddingHorizontal: 10}}>
               <FlatList
                 data={matches}

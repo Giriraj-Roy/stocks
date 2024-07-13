@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TitleBar from '../components/TitleBar'
 import { LineChart } from 'react-native-chart-kit'
 import TimeSeries5min from '../assets/TimeSeries5min'
+import Loader from '../components/Loader'
 
 // Text.defaultProps.style = { color: 'black' };
 
@@ -13,6 +14,7 @@ const Details = ({navigation, route}) => {
     const [stockDates, setStockDates] = useState([])
     const [closingVals, setClosingVals] = useState([]);
     const [chartData, setChartData] = useState({})
+    const [loading, setLoading] = useState(false)
 
     const data = {
         "Symbol": "IBM",
@@ -143,6 +145,8 @@ const Details = ({navigation, route}) => {
                 // legend: ["Rainy Days"] 
               };
               setChartData(tempChartData)
+                console.log("chartData",chartData);
+
         // }
 
 
@@ -167,11 +171,11 @@ const Details = ({navigation, route}) => {
         barPercentage: 0.5,
         useShadowColorFromDataset: false 
     };
+
     
-    // try{
-        
         return (
-            <ScrollView>
+            loading ? <Loader/> :
+            <ScrollView style={{backgroundColor: "#FFFFFF"}}>
                 <TitleBar navigation={navigation} screen="Details Screen"/>
     
                 <View style={{flexDirection: "row", justifyContent: "space-between", paddingRight: 10}}>
@@ -187,32 +191,36 @@ const Details = ({navigation, route}) => {
                         </View>
                     </View>
                     <View>
-                        <Text style={{color: "black"}}>  Curr val</Text>
-                        <Text style={{color: "black"}}>  Prof</Text>
+                        <Text style={{color: "black"}}> {route?.params?.item?.price}</Text>
+                        <Text style={{color: "black"}}>  {route?.params?.item?.change_percentage}</Text>
                     </View>
     
                 </View>
+                
+                <View style={{marginVertical: 10, justifyContent: "center", alignItems: "center"}}>
+
+                    {/* Chart */}
+                    <LineChart
+                        data={ tempChartData}
+                        // data={ chartData}
+                        width={screenWidth}
+                        height={220}
+                        withDots={false}
+                        xLabelsOffset={10}
+                        chartConfig={chartConfig}
+                    />
+
+                </View>
     
-                {/* Chart */}
-                <LineChart
-                    data={ tempChartData}
-                    // data={ chartData}
-                    width={screenWidth}
-                    height={220}
-                    withDots={false}
-                    xLabelsOffset={10}
-                    chartConfig={chartConfig}
-                />
-    
-                <View style={{marginVertical: 10, width: "98%", alignSelf: "center", borderWidth: 2, borderColor: "lightgray", padding: 10}}>
+                <View style={{marginVertical: 10, width: "95%", alignSelf: "center", borderWidth: 2, borderColor: "lightgray", borderRadius: 8, padding: 10}}>
                     <Text style={{color: "black", paddingBottom: 10, borderBottomWidth: 1}}>  About {stock?.Name}</Text>
                     <Text style={{marginVertical: 6, color: "black", textAlign: "justify"}}>{stock?.Description}</Text>
                     <View style={{flexDirection: "row", flexWrap : 'wrap'}}>
                         <View style={{marginVertical: 4, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 30, backgroundColor: ""}}>
-                            <Text>Industry : {stock?.Industry}</Text>
+                            <Text style={{color: "black"}}>Industry : {stock?.Industry}</Text>
                         </View>
                         <View style={{marginVertical: 4, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 30, backgroundColor: ""}}>
-                            <Text>Sector : {stock?.Sector}</Text>
+                            <Text style={{color: "black"}}>Sector : {stock?.Sector}</Text>
                         </View>
                     </View>
                     <View  style={{flexDirection: "row", justifyContent: "space-around"}}>
@@ -231,6 +239,7 @@ const Details = ({navigation, route}) => {
                 </View>
             </ScrollView>
         )
+       
     // }catch(e){
     //     return(
     //         navigation.navigate("Error")

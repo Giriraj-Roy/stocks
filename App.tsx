@@ -1,9 +1,12 @@
 import React from 'react';
 import AppNavigation from "./src/navigation/AppNavigation"
+import AppProvider from './src/utils/AppProvider';
 
 const App: React.FC = () => {
   return (
-    <AppNavigation/>
+    <AppProvider>
+      <AppNavigation/>
+    </AppProvider>
   )
 };
 

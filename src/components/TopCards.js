@@ -4,16 +4,16 @@ import { useNavigation } from '@react-navigation/native'
 
 const uri = `https://picsum.photos/200`
 
-const TopCards = ({navigation}) => {
+const TopCards = ({navigation, item}) => {
 
   // const navigation = useNavigation();
 
   return (
-    <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate("Details")}>
+    <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate("Details", { item : item})}>
       <Image source={{uri : uri}} style={styles.image}/>
       <Text style={{marginVertical: 10, fontSize: 17, color: "black", fontWeight: 500}} numberOfLines={2}>Company Name Company Name Company Name Company Name Company Name</Text>
-      <Text style={{marginVertical: 8, fontSize: 17}}>Current Value</Text>
-      <Text style={{marginBottom: 4, fontSize: 17}}>Percentage</Text>
+      <Text style={{ color: "black", marginVertical: 8, fontSize: 17}}>Current Value</Text>
+      <Text style={{ color: "black", marginBottom: 4, fontSize: 17}}>Percentage</Text>
     </TouchableOpacity>
   )
 }

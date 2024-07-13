@@ -16,7 +16,7 @@ const TitleBar = ({navigation, screen}) => {
             <Text style={{marginHorizontal: 10}}>🔙</Text>
           </TouchableOpacity>
         }
-        <Text style={{fontSize: 24, color: "black"}}>{screen}</Text>
+        <Text style={{fontSize: 20, color: "black"}}>{screen}</Text>
       </View>
       {
         screen != "Stocks App" &&
@@ -28,23 +28,6 @@ const TitleBar = ({navigation, screen}) => {
           >
             <Text style={{color: "black"}}>Search</Text>
           </TouchableOpacity>
-          {/* {
-            matches.length > 0 && 
-          <View style={{zIndex: 99999, backgroundColor: "green", width: 150, position: 'absolute', top: 40}}>
-              <FlatList
-                data={matches}
-                keyExtractor={(item) => item.id}
-                renderItem={({item})=>{
-                  return (
-                    <View style={{height: 30}}>
-                      <Text style={{color: "white"}}>{item["2. name"]}</Text>
-                    </View>
-                  )
-                }}
-              />
-          </View>
-          } */}
-
 
         </View>
       }
