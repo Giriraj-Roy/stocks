@@ -12,10 +12,18 @@ const getReq = async (AsyncID, query)=>{
             const response = await  axios.get(`${baseUrl}query?${query}&apikey=${API_KEY}`);
             // const response =  await axios.get(baseUrl+"query?function=OVERVIEW&symbol=IBM&apikey=demo")
             console.log("Response get ",query, "\n", response.data);
+            await AsyncStorage.setItem(String(AsyncID), JSON.stringify(response.data))
+
+            setTimeout(async()=>{
+                await AsyncStorage.removeItem(AsyncID)
+                console.log("item Removed from async storage");
+            },1000*60)
+            return response.data
         }
         else{
             //Get Data from AsyncStorage
-            console.log("Data from Async");
+            console.log("Data from Async", JSON.parse(val));
+            return JSON.parse(val)
         }
 
     }catch(e){

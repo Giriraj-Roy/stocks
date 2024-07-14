@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 const uri = `https://picsum.photos/200`
 
-const TopCards = ({navigation, item, tab}) => {
+const TopCards = ({navigation, item, tab, index}) => {
 
   const percent = Number(item?.change_percentage.substring(0, item?.change_percentage.length - 1))
   const [isLoaded, setIsLoaded] = useState(false);
@@ -16,7 +16,7 @@ const TopCards = ({navigation, item, tab}) => {
   };
 
   return (
-    <TouchableOpacity key={item?.ticker+item?.price} style={styles.container} onPress={()=>navigation.navigate("Details", { item : item, tab : tab})}>
+    <TouchableOpacity key={index} style={styles.container} onPress={()=>navigation.navigate("Details", { item : item, tab : tab})}>
       {isLoaded ? (
         <Image source={{uri : uri}} style={styles.image} />
       ) : (

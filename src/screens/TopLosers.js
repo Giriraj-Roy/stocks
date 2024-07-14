@@ -5,6 +5,7 @@ import TopCards from '../components/TopCards'
 import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'
+import getReq from '../utils/Apis'
 
 const TopLosers = ({navigation}) => {
 
@@ -15,12 +16,13 @@ const TopLosers = ({navigation}) => {
 
   const fetchTopLosers = async ()=>{
     try{
-
-      setTopLosers(top_losers.top_losers)
+      const response = await getReq('top_losers', 'function=TOP_GAINERS_LOSERS')
+      console.log("Top top_losers", response?.top_losers);
+      setTopLosers(response?.top_losers)
       
       // setLoading(false)
     }catch(e){
-      console.error("fetchTopGainers");
+      console.error("fetchTopLosers", e);
     }
   }
 
@@ -38,7 +40,7 @@ const TopLosers = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
             data={topLosers}
             numColumns={2}
-            renderItem={({item})=> <TopCards navigation={navigation} item={item} tab={"losers"}/>}
+            renderItem={({item, index})=> <TopCards index={index} navigation={navigation} item={item} tab={"losers"}/>}
             keyExtractor={item => item}
             contentContainerStyle={{alignSelf: "center", justifyContent: "space-evenly", paddingBottom: 50}}
         />

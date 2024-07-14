@@ -5,6 +5,7 @@ import top_gainers from '../assets/TopGainersData'
 import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'
+import getReq from '../utils/Apis'
 
 const TopGainers = ({navigation}) => {
 
@@ -13,8 +14,9 @@ const TopGainers = ({navigation}) => {
 
   const fetchTopGainers = async ()=>{
     try{
-
-      setTopGainers(top_gainers.top_gainers)
+      const response = await getReq('top_gainers', 'function=TOP_GAINERS_LOSERS')
+      console.log("Top Gainers", response);
+      setTopGainers(response.top_gainers)
       
       // setLoading(false)
     }catch(e){
@@ -36,7 +38,7 @@ const TopGainers = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
             data={topGainers}
             numColumns={2}
-            renderItem={({item})=> <TopCards navigation={navigation} item={item}/>}
+            renderItem={({item, index})=> <TopCards index={index} navigation={navigation} item={item}/>}
             keyExtractor={item => item}
             initialNumToRender={5}
             maxToRenderPerBatch={5}
