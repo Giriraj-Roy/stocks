@@ -5,16 +5,16 @@ import {LineChart} from 'react-native-charts-wrapper';
 
 const Chart = ({sampleData}) => {
   return (
-    //TODO: React Native Chart Wrapper
     <LineChart
       data={{
         dataSets: [{values: sampleData}],
         config: {
-          drawFilled: true, // Enable the background fill
-          fillColor: processColor('red'), // Background color under the curve
-          // fillAlpha: 100, // Transparency level (0-255)
-          // color: processColor('#ff7043'), // Line color
+          drawFilled: true,
+          fillColor: processColor('red'), 
+          fillAlpha: 0, //0-255
+          // color: processColor('#ff7043'),
           // drawValues: false,
+          drawCircles: false
         }
       }}
       width={Dimensions.get('window').width}

@@ -31,7 +31,7 @@ const TopGainers = ({navigation}) => {
   return (
     loading ? <Loader/> :
     <View style={{flex: 1, backgroundColor: "white"}}>
-      <TitleBar navigation={navigation} screen="Stocks App"/>
+      <TitleBar navigation={navigation} screen="Top Stocks"/>
 
         <FlatList
             bounces={false}

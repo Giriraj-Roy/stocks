@@ -11,7 +11,7 @@ const TitleBar = ({navigation, screen}) => {
     <View style={styles.container}>
       <View style={{flexDirection: "row", alignItems: "center"}}>
         {
-          screen != "Stocks App" &&
+          screen != "Top Stocks" &&
           <TouchableOpacity onPress={()=>navigation.goBack()}>
             <Text style={{marginHorizontal: 10}}>🔙</Text>
           </TouchableOpacity>
@@ -19,7 +19,7 @@ const TitleBar = ({navigation, screen}) => {
         <Text style={{fontSize: 20, color: "black"}}>{screen}</Text>
       </View>
       {
-        screen != "Stocks App" &&
+        screen != "Top Stocks" &&
         <View>
           
           <TouchableOpacity

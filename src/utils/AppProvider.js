@@ -5,12 +5,15 @@ import { useColorScheme } from 'react-native';
 const AppProvider = ({children}) => {
   const [isDarkMode, setIsDarkMode] = useState(useColorScheme()==='dark');
   const [loading, setLoading] = useState(false)
+  const [indtraday, setIntraday] = useState(true)
 
   const value = {
     isDarkMode,
     setIsDarkMode : ()=> setIsDarkMode((prevState) => !prevState),
     loading,
-    setLoading : ()=> setLoading((prev)=> !prev)
+    setLoading : ()=> setLoading((prev)=> !prev),
+    indtraday,
+    setIntraday : (val)=> setIntraday(val)
   };
 
   return(

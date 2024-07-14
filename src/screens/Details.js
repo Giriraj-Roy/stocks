@@ -9,6 +9,7 @@ import Chart from '../components/Chart'
 import moment from 'moment'
 import StocksHeader from '../components/StocksHeader'
 import GETRequest from '../utils/Apis'
+import StockRange from '../components/StockRange'
 
 
 
@@ -24,7 +25,7 @@ const Details = ({navigation, route}) => {
     const percent = Number(item?.change_percentage.substring(0, item?.change_percentage.length - 1))
 
     // Fetch Data from Context
-    const {loading, setLoading} = useContext(AppContext)
+    const {loading, setLoading, intraday} = useContext(AppContext)
 
     const stockParams = [
         { id: 1, name: "Market Cap", value: `$${(stock?.MarketCapitalization/1e10).toFixed(2)}T`},
@@ -86,13 +87,14 @@ const Details = ({navigation, route}) => {
         "DividendDate": "2024-06-10",
         "ExDividendDate": "2024-05-09"
     }
-    
-    const uri = `https://picsum.photos/200`
-    const screenWidth = Dimensions.get('window').width
 
-    const getSampleData = async ()=>{
+    const getSampleData = async (TimeSeriesData = TimeSeries5min)=>{
         try{
             const timeSeries = TimeSeries5min[`Time Series (5min)`]
+
+            const seriesKey = intraday ? `TimeSeries (5min)` : `Time Series (Daily)`
+
+            // const timeSeries = TimeSeriesData[seriesKey]
             const outputData = {}
             
             for (const timestamp in timeSeries) {
@@ -141,30 +143,33 @@ const Details = ({navigation, route}) => {
             console.error("Error getSampleData", e);
         }
     }
+
+    //API calls
+
+    const handleAPICalls = async ()=>{
+        try{
+            const details = await GETRequest("detail"+item?.ticker, `function=OVERVIEW&symbol=IBM`)
+            const chartValues = await GETRequest("chart"+item?.ticker, `function=TIME_SERIES_${intraday ? "INTRADAY" : "DAILY"}&symbol=IBM${intraday && "&interval=5min"}&outputsize=full`)
+            // console.log("chartValues",chartValues);
+            // const chartValues = await GETRequest("chart"+item?.ticker, `?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full`)
+            setStock(details)
+            getSampleData(chartValues)
+
+
+        }catch(e){
+            console.log("Error handleAPICalls", e);
+        }
+    }
     
 
 
     useEffect(()=>{
         setLoading(true)
-        setStock(data)
-        getSampleData()
-        GETRequest("detail", "function=OVERVIEW&symbol=IBM")
+        handleAPICalls()
+        // setStock(data)
 
         setTimeout(()=>setLoading(false),2000)
     },[])
-
-    
-
-    
-    const chartConfig = {
-        backgroundGradientFrom: "#FFFFFF",
-        backgroundGradientTo: "#FFFFFF",
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        strokeWidth: 2,
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false 
-    };
-
 
     
 
@@ -184,6 +189,7 @@ const Details = ({navigation, route}) => {
                         <Chart sampleData={sampleData} />
                     }
                 </View>
+                <StockRange />
     
                 <StockDesc stock={stock} stockParams={stockParams} />
             </ScrollView>

@@ -11,7 +11,7 @@ const GETRequest = async (AsyncID, query)=>{
             //Call API
             const response = await  axios.get(`${baseUrl}query?${query}&apikey=${API_KEY}`);
             // const response =  await axios.get(baseUrl+"query?function=OVERVIEW&symbol=IBM&apikey=demo")
-            console.log("Response get ",query, "\n", response.data);
+            // console.log("Response get ",query, "\n", response.data);
             await AsyncStorage.setItem(String(AsyncID), JSON.stringify(response.data))
 
             setTimeout(async()=>{
@@ -22,7 +22,7 @@ const GETRequest = async (AsyncID, query)=>{
         }
         else{
             //Get Data from AsyncStorage
-            console.log("Data from Async", JSON.parse(val));
+            // console.log("Data from Async", JSON.parse(val));
             return JSON.parse(val)
         }
 
