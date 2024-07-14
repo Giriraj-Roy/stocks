@@ -1,6 +1,5 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Welcome to myStocks
 
-# Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
@@ -49,7 +48,7 @@ This is one way to run your app — you can also run it directly from within And
 
 ## Diving Into the Application
 
-Folder Structure : 
+###  Folder Structure  
 ```
 my-stocks/
 ├── android/
@@ -68,10 +67,6 @@ my-stocks/
 │   ├── constants/
 │   │   ├── apiKey.js
 │   │   └── baseUrl.js
-│   ├── hooks/
-│   │   ├── useAuth.js
-│   │   ├── useNotifications.js
-│   │   └── ...
 │   ├── navigation/
 │   │   ├── AppNavigator.js
 │   │   ├── TabNavigator.js
@@ -82,10 +77,6 @@ my-stocks/
 │   │   ├── TopGainers.js
 │   │   ├── TopLosers.js
 │   │   └── Error.js
-│   ├── services/
-│   │   ├── authService.js
-│   │   ├── userService.js
-│   │   └── ...
 │   ├── utils/
 │   │   ├── APIs.js
 │   │   ├── AppContext.js
@@ -99,17 +90,15 @@ my-stocks/
 └── README.md
 ```
 
+#### API Endpoint
 
-# Troubleshooting
+```
+https://www.alphavantage.co/
+```
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+#### Key Performance Indicators
 
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Lazy Loaded Images
+- Proper Handling of Loading, Error and empty states
+- Cached API Responses
+- Light and Dark Mode feature
