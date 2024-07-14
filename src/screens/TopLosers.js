@@ -24,6 +24,7 @@ const TopLosers = ({navigation}) => {
       // setLoading(false)
     }catch(e){
       console.error("fetchTopLosers", e);
+      navigation.navigate("Error");
     }
   }
 

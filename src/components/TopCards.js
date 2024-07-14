@@ -27,7 +27,7 @@ const TopCards = ({navigation, item, tab, index}) => {
       )}
       <Text style={{marginVertical: 10, fontSize: 17, color: isDarkMode ? "white" : "black", fontWeight: 500}} numberOfLines={2}>{item?.ticker}</Text>
       <Text style={{ color: isDarkMode ? "white" : "black", fontWeight: "700", marginVertical: 4, fontSize: 17}}>$ {item?.price}</Text>
-      <Text style={{ color: tab=="losers" ? "red" : "green", fontWeight: "700", marginBottom: 4, fontSize: 14}}> {tab!="losers" && "+ " }{percent.toFixed(2)} % {tab=="losers" && "🔻"}</Text>
+      <Text style={{ color: tab=="losers" ? "red" : isDarkMode ? "lightgreen" :"green", fontWeight: "700", marginBottom: 4, fontSize: 14}}> {tab!="losers" && "+ " }{percent.toFixed(2)} % {tab=="losers" && "🔻"}</Text>
     </TouchableOpacity>
   )
 }

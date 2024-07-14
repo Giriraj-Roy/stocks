@@ -22,6 +22,7 @@ const Search = ({navigation}) => {
   
       }catch(e){
         console.error("fetchSearchResults", e);
+        navigation.navigate("Error");
       }
     }
     const handleSearch = (text) => {

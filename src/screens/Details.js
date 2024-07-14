@@ -142,6 +142,7 @@ const Details = ({navigation, route}) => {
         }
         catch(e){
             console.error("Error getSampleData", e);
+            navigation.navigate("Error");
         }
     }
 
@@ -149,8 +150,8 @@ const Details = ({navigation, route}) => {
 
     const handleAPICalls = async ()=>{
         try{
-            const details = await GETRequest("detail"+item?.ticker, `function=OVERVIEW&symbol=IBM`)
-            const chartValues = await GETRequest("chart"+item?.ticker, `function=TIME_SERIES_${intraday ? "INTRADAY" : "DAILY"}&symbol=IBM${intraday && "&interval=5min"}&outputsize=full`)
+            const details = await GETRequest("detail"+item?.ticker, `function=OVERVIEW&symbol=${item?.ticker}`)
+            const chartValues = await GETRequest("chart"+item?.ticker, `function=TIME_SERIES_${intraday ? "INTRADAY" : "DAILY"}&symbol=${item?.ticker}${intraday && "&interval=5min"}&outputsize=full`)
             // console.log("chartValues",chartValues);
             // const chartValues = await GETRequest("chart"+item?.ticker, `?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full`)
             setStock(details)
@@ -159,6 +160,7 @@ const Details = ({navigation, route}) => {
 
         }catch(e){
             console.log("Error handleAPICalls", e);
+            navigation.navigate("Error");
         }
     }
     
@@ -189,7 +191,7 @@ const Details = ({navigation, route}) => {
                         sampleData.length > 0 ?
                         <Chart sampleData={sampleData} />
                         :
-                        <View style={{width: "90%", height: 220}}>
+                        <View style={{width: "90%", height: 220, backgroundColor: isDarkMode ? Colors.darker : Colors.lighter}}>
                             <ActivityIndicator size="large" color="#0000ff" />
                         </View>
                     }

@@ -22,6 +22,7 @@ const TopGainers = ({navigation}) => {
       // setLoading(false)
     }catch(e){
       console.error("fetchTopGainers");
+      navigation.navigate("Error");
     }
   }
 
