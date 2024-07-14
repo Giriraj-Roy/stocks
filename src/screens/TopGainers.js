@@ -5,7 +5,7 @@ import top_gainers from '../assets/TopGainersData'
 import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'
-import getReq from '../utils/Apis'
+import GETRequest from '../utils/Apis'
 
 const TopGainers = ({navigation}) => {
 
@@ -14,7 +14,7 @@ const TopGainers = ({navigation}) => {
 
   const fetchTopGainers = async ()=>{
     try{
-      const response = await getReq('top_gainers', 'function=TOP_GAINERS_LOSERS')
+      const response = await GETRequest('top_gainers', 'function=TOP_GAINERS_LOSERS')
       console.log("Top Gainers", response);
       setTopGainers(response.top_gainers)
       

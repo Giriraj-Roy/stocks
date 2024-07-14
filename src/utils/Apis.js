@@ -4,7 +4,7 @@ import API_KEY from "../constants/apiKey";
 import axios from "axios";
 
 
-const getReq = async (AsyncID, query)=>{
+const GETRequest = async (AsyncID, query)=>{
     try{
         let val = await AsyncStorage.getItem(String(AsyncID))
         if(val==null){
@@ -31,4 +31,4 @@ const getReq = async (AsyncID, query)=>{
     }
 }
 
-export default getReq
+export default GETRequest

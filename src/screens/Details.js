@@ -8,7 +8,7 @@ import { AppContext } from '../utils/AppContext'
 import Chart from '../components/Chart'
 import moment from 'moment'
 import StocksHeader from '../components/StocksHeader'
-import getReq from '../utils/Apis'
+import GETRequest from '../utils/Apis'
 
 
 
@@ -148,7 +148,7 @@ const Details = ({navigation, route}) => {
         setLoading(true)
         setStock(data)
         getSampleData()
-        getReq("detail", "function=OVERVIEW&symbol=IBM")
+        GETRequest("detail", "function=OVERVIEW&symbol=IBM")
 
         setTimeout(()=>setLoading(false),2000)
     },[])

@@ -5,7 +5,7 @@ import TopCards from '../components/TopCards'
 import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'
-import getReq from '../utils/Apis'
+import GETRequest from '../utils/Apis'
 
 const TopLosers = ({navigation}) => {
 
@@ -16,7 +16,7 @@ const TopLosers = ({navigation}) => {
 
   const fetchTopLosers = async ()=>{
     try{
-      const response = await getReq('top_losers', 'function=TOP_GAINERS_LOSERS')
+      const response = await GETRequest('top_losers', 'function=TOP_GAINERS_LOSERS')
       console.log("Top top_losers", response?.top_losers);
       setTopLosers(response?.top_losers)
       
