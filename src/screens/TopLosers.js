@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { top_losers } from '../assets/TopGainersData'
+import { top_losers } from '../assets/sampledata/TopGainersData'
 import TopCards from '../components/TopCards'
 import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'

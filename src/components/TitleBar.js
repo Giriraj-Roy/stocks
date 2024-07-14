@@ -1,7 +1,5 @@
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import baseUrl from '../constants/baseUrl'
+import { Image, StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from 'react-native'
+import React from 'react'
 
 const TitleBar = ({navigation, screen}) => {
 
@@ -13,13 +11,13 @@ const TitleBar = ({navigation, screen}) => {
         {
           screen != "Top Stocks" &&
           <TouchableOpacity onPress={()=>navigation.goBack()}>
-            <Text style={{marginHorizontal: 10}}>🔙</Text>
+              <Image source={require('../assets/images/arrow.png')} style={{width: 25, height: 25, paddingHorizontal: 10}}/>
           </TouchableOpacity>
         }
-        <Text style={{fontSize: 20, color: "black"}}>{screen}</Text>
+        <Text style={{fontSize: 20, color: "black", marginHorizontal: 5}}>{screen}</Text>
       </View>
       {
-        screen != "Top Stocks" &&
+        screen != "Top Stocks" ?
         <View>
           
           <TouchableOpacity
@@ -30,6 +28,11 @@ const TitleBar = ({navigation, screen}) => {
           </TouchableOpacity>
 
         </View>
+
+        :
+        <TouchableOpacity style={{borderWidth: 1, padding: 6}}>
+          <Text style={{color: "black"}}>Switch To theme</Text>
+        </TouchableOpacity>
       }
     </View>
   )

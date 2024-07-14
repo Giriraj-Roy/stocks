@@ -1,7 +1,7 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import TopCards from '../components/TopCards'
-import top_gainers from '../assets/TopGainersData'
+import top_gainers from '../assets/sampledata/TopGainersData'
 import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'

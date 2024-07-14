@@ -1,7 +1,7 @@
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import TitleBar from '../components/TitleBar'
-import TimeSeries5min from '../assets/TimeSeries5min'
+import TimeSeries5min from '../assets/sampledata/TimeSeries5min'
 import Loader from '../components/Loader'
 import StockDesc from '../components/StockDesc'
 import { AppContext } from '../utils/AppContext'
@@ -185,11 +185,15 @@ const Details = ({navigation, route}) => {
 
                 <View style={styles.container}>
                     {
-                        sampleData.length > 0 &&
+                        sampleData.length > 0 ?
                         <Chart sampleData={sampleData} />
+                        :
+                        <View style={{width: "90%", height: 220}}>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                        </View>
                     }
                 </View>
-                <StockRange />
+                {/* <StockRange /> */}
     
                 <StockDesc stock={stock} stockParams={stockParams} />
             </ScrollView>
