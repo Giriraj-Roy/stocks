@@ -6,11 +6,12 @@ import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'
 import GETRequest from '../utils/Apis'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const TopLosers = ({navigation}) => {
 
 
-  const {loading, setLoading} = useContext(AppContext)
+  const {loading, isDarkMode} = useContext(AppContext)
 
   const [topLosers, setTopLosers] = useState([])
 
@@ -32,7 +33,7 @@ const TopLosers = ({navigation}) => {
 
   return (
     loading ? <Loader/> :
-    <View style={{flex: 1, backgroundColor: "white"}}>
+    <View style={{flex: 1, backgroundColor: isDarkMode ? Colors.darker : "white"}}>
       <TitleBar navigation={navigation} screen="Top Stocks"/>
 
         <FlatList

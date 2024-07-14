@@ -20,18 +20,18 @@ const Chart = ({sampleData}) => {
       width={Dimensions.get('window').width}
       height={220}
       yAxisLabel="$"
-      // chartConfig={{
-      //   backgroundColor: '#e26a00',
-      //   backgroundGradientFrom: '#fb8c00',
-      //   backgroundGradientTo: '#ffa726',
-      //   fillColor: processColor('rgba(255, 255, 0, 1)'),
-      //   fillAlpha: 100,
-      //   drawFilled: true,
-      //   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      //   style: {
-      //     borderRadius: 16,
-      //   },
-      // }}
+      chartConfig={{
+        backgroundColor: '#e26a00',
+        backgroundGradientFrom: '#fb8c00',
+        backgroundGradientTo: '#ffa726',
+        fillColor: processColor('rgba(255, 255, 0, 1)'),
+        fillAlpha: 100,
+        drawFilled: true,
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        style: {
+          borderRadius: 16,
+        },
+      }}
       bezier
       style={{
         marginVertical: 8,

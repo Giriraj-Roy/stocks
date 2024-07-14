@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AppContext } from '../utils/AppContext'
 
 const uri = `https://picsum.photos/200`
 
@@ -7,6 +8,8 @@ const TopCards = ({navigation, item, tab, index}) => {
 
   const percent = Number(item?.change_percentage.substring(0, item?.change_percentage.length - 1))
   const [isLoaded, setIsLoaded] = useState(false);
+  const {isDarkMode} = useContext(AppContext)
+
 
   const handleLayout = (event) => {
 
@@ -22,8 +25,8 @@ const TopCards = ({navigation, item, tab, index}) => {
       ) : (
         <View style={styles.image} onLayout={handleLayout} />
       )}
-      <Text style={{marginVertical: 10, fontSize: 17, color: "black", fontWeight: 500}} numberOfLines={2}>{item?.ticker}</Text>
-      <Text style={{ color: "black", fontWeight: "700", marginVertical: 4, fontSize: 17}}>$ {item?.price}</Text>
+      <Text style={{marginVertical: 10, fontSize: 17, color: isDarkMode ? "white" : "black", fontWeight: 500}} numberOfLines={2}>{item?.ticker}</Text>
+      <Text style={{ color: isDarkMode ? "white" : "black", fontWeight: "700", marginVertical: 4, fontSize: 17}}>$ {item?.price}</Text>
       <Text style={{ color: tab=="losers" ? "red" : "green", fontWeight: "700", marginBottom: 4, fontSize: 14}}> {tab!="losers" && "+ " }{percent.toFixed(2)} % {tab=="losers" && "🔻"}</Text>
     </TouchableOpacity>
   )

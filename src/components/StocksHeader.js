@@ -1,9 +1,12 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../utils/AppContext';
 
 const StocksHeader = ({stock, tab, percent, item}) => {
 
     const uri = `https://picsum.photos/200`
+    const {isDarkMode} = useContext(AppContext)
+
 
   return (
     <View
@@ -15,18 +18,18 @@ const StocksHeader = ({stock, tab, percent, item}) => {
       <View style={{flexDirection: 'row'}}>
         <Image source={{uri: uri}} style={styles.image} />
         <View>
-          <Text style={{color: 'black'}}>{stock?.Name}</Text>
+          <Text style={{color:  isDarkMode ? "white" : 'black'}}>{stock?.Name}</Text>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{color: 'black'}}>{stock?.Symbol}, </Text>
-            <Text style={{color: 'black'}}>{stock?.AssetType}</Text>
+            <Text style={{color:  isDarkMode ? "white" : 'black'}}>{stock?.Symbol}, </Text>
+            <Text style={{color:  isDarkMode ? "white" : 'black'}}>{stock?.AssetType}</Text>
           </View>
-          <Text style={{color: 'black'}}>{stock?.Exchange}</Text>
+          <Text style={{color:  isDarkMode ? "white" : 'black'}}>{stock?.Exchange}</Text>
         </View>
       </View>
       <View>
         <Text
           style={{
-            color: 'black',
+            color:  isDarkMode ? "white" : 'black',
             fontWeight: '700',
             marginVertical: 4,
             fontSize: 17,

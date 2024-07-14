@@ -1,10 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import TopGainers from "../screens/TopGainers";
 import TopLosers from "../screens/TopLosers";
+import { AppContext } from "../utils/AppContext";
+import { useContext } from "react";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
+
+  const {isDarkMode} = useContext(AppContext)
+
   return (
     <Tab.Navigator
     initialRouteName={'Splash'}
@@ -18,7 +24,7 @@ const TabNavigation = () => {
           }
         }
       },
-      tabBarActiveTintColor: "#D2464B",
+      tabBarActiveTintColor: isDarkMode ? Colors.lighter : "#D2464B",
       tabBarInactiveTintColor: "#575757",
       tabBarLabelStyle: {
         fontSize: 24,
@@ -27,17 +33,12 @@ const TabNavigation = () => {
       },
       tabBarStyle: {
         height: Platform.OS === 'android' ? '10%' : '12%',
-        backgroundColor: 'white',
+        backgroundColor: isDarkMode ? Colors.darker : 'white',
       },
     })}
     
     >
-      <Tab.Screen name="Top Gainers" component={TopGainers} 
-                  options={{  
-                              // title : "Stocks App"
-                              headerShown : false
-                            }} 
-      />
+      <Tab.Screen name="Top Gainers" component={TopGainers} options={{headerShown : false}} />
       <Tab.Screen name="Top Losers" component={TopLosers} options={{headerShown : false}} />
     </Tab.Navigator>
   )

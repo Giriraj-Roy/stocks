@@ -1,7 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../utils/AppContext';
 
 const StockDesc = ({stock, stockParams}) => {
+
+  const {isDarkMode} = useContext(AppContext)
+
   return (
     <View
       style={{
@@ -13,11 +17,11 @@ const StockDesc = ({stock, stockParams}) => {
         borderRadius: 8,
         padding: 10,
       }}>
-      <Text style={{color: 'black', paddingBottom: 10, borderBottomWidth: 1}}>
+      <Text style={{color:  isDarkMode ? "white" : 'black', paddingBottom: 10, borderBottomWidth: 1}}>
         {' '}
         About {stock?.Name}
       </Text>
-      <Text style={{marginVertical: 6, color: 'black', textAlign: 'justify'}}>
+      <Text style={{marginVertical: 6, color:  isDarkMode ? "white" : 'black', textAlign: 'justify'}}>
         {stock?.Description}
       </Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -29,7 +33,7 @@ const StockDesc = ({stock, stockParams}) => {
             borderRadius: 30,
             backgroundColor: '',
           }}>
-          <Text style={{color: 'black'}}>Industry : {stock?.Industry}</Text>
+          <Text style={{color:  isDarkMode ? "white" : 'black'}}>Industry : {stock?.Industry}</Text>
         </View>
         <View
           style={{
@@ -39,15 +43,15 @@ const StockDesc = ({stock, stockParams}) => {
             borderRadius: 30,
             backgroundColor: '',
           }}>
-          <Text style={{color: 'black'}}>Sector : {stock?.Sector}</Text>
+          <Text style={{color:  isDarkMode ? "white" : 'black'}}>Sector : {stock?.Sector}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
         {stockParams?.map(ele => {
           return (
             <View key={ele?.id}>
-              <Text style={{color: 'black'}}>{ele?.name}</Text>
-              <Text style={{fontWeight: '600', color: 'black'}}>
+              <Text style={{color:  isDarkMode ? "white" : 'black'}}>{ele?.name}</Text>
+              <Text style={{fontWeight: '600', color:  isDarkMode ? "white" : 'black'}}>
                 {ele?.value}
               </Text>
             </View>

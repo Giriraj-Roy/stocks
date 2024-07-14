@@ -10,6 +10,7 @@ import moment from 'moment'
 import StocksHeader from '../components/StocksHeader'
 import GETRequest from '../utils/Apis'
 import StockRange from '../components/StockRange'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 
 
@@ -25,7 +26,7 @@ const Details = ({navigation, route}) => {
     const percent = Number(item?.change_percentage.substring(0, item?.change_percentage.length - 1))
 
     // Fetch Data from Context
-    const {loading, setLoading, intraday} = useContext(AppContext)
+    const {loading, setLoading, intraday, isDarkMode} = useContext(AppContext)
 
     const stockParams = [
         { id: 1, name: "Market Cap", value: `$${(stock?.MarketCapitalization/1e10).toFixed(2)}T`},
@@ -177,7 +178,7 @@ const Details = ({navigation, route}) => {
         return (
             loading ? <Loader/> :
 
-            <ScrollView style={{backgroundColor: "#FFFFFF"}}>
+            <ScrollView style={{backgroundColor: isDarkMode ? Colors.darker : "#FFFFFF"}}>
                 <TitleBar navigation={navigation} screen="Details"/>
     
                 <StocksHeader stock={stock} item={item} tab={tab} percent={percent} />

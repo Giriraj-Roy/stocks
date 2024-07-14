@@ -6,10 +6,11 @@ import TitleBar from '../components/TitleBar'
 import Loader from '../components/Loader'
 import { AppContext } from '../utils/AppContext'
 import GETRequest from '../utils/Apis'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const TopGainers = ({navigation}) => {
 
-  const {loading, setLoading} = useContext(AppContext)
+  const {loading, isDarkMode} = useContext(AppContext)
   const [topGainers, setTopGainers] = useState([])
 
   const fetchTopGainers = async ()=>{
@@ -30,7 +31,7 @@ const TopGainers = ({navigation}) => {
 
   return (
     loading ? <Loader/> :
-    <View style={{flex: 1, backgroundColor: "white"}}>
+    <View style={{flex: 1, backgroundColor: isDarkMode ? Colors.darker : "white"}}>
       <TitleBar navigation={navigation} screen="Top Stocks"/>
 
         <FlatList
@@ -42,7 +43,6 @@ const TopGainers = ({navigation}) => {
             keyExtractor={item => item}
             initialNumToRender={5}
             maxToRenderPerBatch={5}
-            // windowSize={21}
             contentContainerStyle={{alignSelf: "center", justifyContent: "space-evenly", paddingBottom: 50}}
         />
 

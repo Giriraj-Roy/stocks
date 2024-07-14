@@ -9,7 +9,7 @@ const AppProvider = ({children}) => {
 
   const value = {
     isDarkMode,
-    setIsDarkMode : ()=> setIsDarkMode((prevState) => !prevState),
+    toggleDarkMode : ()=> setIsDarkMode((prevState) => !prevState),
     loading,
     setLoading : ()=> setLoading((prev)=> !prev),
     indtraday,
