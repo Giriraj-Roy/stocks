@@ -1,5 +1,6 @@
 # Welcome to myStocks
 
+[Use This Link To Access media Files of this project](https://drive.google.com/drive/folders/1eT1_68ow1iuIbp0r6Ipej1VzlGf4_0qe?usp=sharing)
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
@@ -102,3 +103,10 @@ https://www.alphavantage.co/
 - Proper Handling of Loading, Error and empty states
 - Cached API Responses
 - Light and Dark Mode feature
+
+### Media
+
+
+![HomeDark](https://github.com/user-attachments/assets/92a79545-5dc1-4fbd-b89a-97775fa797f6)
+
+
